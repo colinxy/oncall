@@ -29,5 +29,5 @@ def on_get(req, resp, key):
     else:                       # should not happen
         events = []
 
-    resp.body = ical.events_to_ical(events, name, contact=False)
+    resp.body = ical.events_to_ical(events, name, contact=False, note=False)
     resp.set_header('Content-Type', 'text/calendar')

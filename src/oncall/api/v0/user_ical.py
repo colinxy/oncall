@@ -18,7 +18,8 @@ def get_user_events(user_name, start):
             `user`.`name` AS user,
             `role`.`name` AS role,
             `event`.`start`,
-            `event`.`end`
+            `event`.`end`,
+            `event`.`note`
         FROM `event`
             JOIN `team` ON `event`.`team_id` = `team`.`id`
             JOIN `user` ON `event`.`user_id` = `user`.`id`

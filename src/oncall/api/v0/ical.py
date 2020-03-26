@@ -7,7 +7,7 @@ from icalendar import Calendar, Event, vCalAddress, vText
 from pytz import utc
 
 
-def events_to_ical(events, identifier, contact=True):
+def events_to_ical(events, identifier, contact=True, note=True):
     connection = db.connect()
     cursor = connection.cursor(db.DictCursor)
 
@@ -59,7 +59,8 @@ def events_to_ical(events, identifier, contact=True):
                       '%s %s shift: %s' % (event['team'], event['role'], full_name))
         cal_event.add('description',
                       '%s\n' % full_name +
-                      ('\n'.join(['%s: %s' % (mode, dest) for mode, dest in user['contacts'].items()]) if contact else ''))
+                      ('\n'.join(['%s: %s' % (mode, dest) for mode, dest in user['contacts'].items()]) if contact else '') +
+                      ('\n%s' % (event.get('note', '') or '') if note else ''))
 
         # Attach info about the user oncall
         attendee = vCalAddress('MAILTO:%s' % (user['contacts'].get('email') if contact else ''))
